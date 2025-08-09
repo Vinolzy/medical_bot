@@ -1,7 +1,3 @@
-[TOC]
-
-
-
 本项目的目的是构建一个具备医学问答能力并且富有同理心的医疗对话机器人。  
 
 系统以[Llama-3.2-3B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct)为基础模型，先通过SFT(监督微调)适配医疗问答领域，再使用DPO(直接偏好优化)引导模型生成更温暖、更具怜悯心的回复。  
@@ -139,7 +135,7 @@ python run.py
 
 训练后的输出如下：
 
-![sft_llm_response](.\imgs\sft_llm_response.png)
+![sft_llm_response](./imgs/sft_llm_response.png)
 
 这里的输出语调和训练集上的比较类似。
 
@@ -159,7 +155,7 @@ DPO 的数据构造将SFT原始回复作为rejected，用 OpenAI 生成的更具
 
 训练后的输出如下：
 
-![dpo_llm_response](.\imgs\dpo_llm_response.png)
+![dpo_llm_response](./imgs/dpo_llm_response.png)
 
 可以看到模型会输出“I understand your concern”等关怀用语，相比SFT微调的模型有一定的同理心的话语出现，但并非100%出现。可能的原因如下：
 
@@ -173,17 +169,17 @@ DPO 的数据构造将SFT原始回复作为rejected，用 OpenAI 生成的更具
 
 Chainlit UI的图片如下图所示，打开界面后有欢迎的提示，下方聊天框处可以通过语音进行文字输入，上传附件等操作。
 
-![chainlit_based_medical_bot](.\imgs\chainlit_based_medical_bot.png)
+![chainlit_based_medical_bot](./imgs/chainlit_based_medical_bot.png)
 
 **模型回答**
 
-![response_without_rag](.\imgs\response_without_rag.png)
+![response_without_rag](./imgs/response_without_rag.png)
 
 **上传附件：图片**
 
 如果上传的是`.jpeg`, `.png`和`.webp`等图片格式，会上传openai进行分析图片内容。
 
-![upload_image](.\imgs\upload_image.png)
+![upload_image](./imgs/upload_image.png)
 
 目前暂未整合到 medical bot 的对话链中，仅做解析演示。比较完整的链路应该是：使用Agent判定意图 → 选择视觉模型 → 解析结果结构化回填到对话上下文，再由本地LLM统一生成最终回答。
 
@@ -195,19 +191,19 @@ Chainlit UI的图片如下图所示，打开界面后有欢迎的提示，下方
 
 下面上传了一个15.3MB的Medical_Book.pdf医学书籍：
 
-![upload_files](.\imgs\upload_files.png)
+![upload_files](./imgs/upload_files.png)
 
 上传后会读取文档并对文档进行分块，去噪清洗 → 段落优先切分，长段再按句切分，支持重叠窗口，随后对每个chunk计算embedding，入库并即时刷新FAISS索引。
 
-![upload_files_debug](.\imgs\upload_files_debug.png)
+![upload_files_debug](./imgs/upload_files_debug.png)
 
 然后再问问题，就会从`Medical_Book`中搜索相似向量，作为参考回答。为提升检索召回，将用户提问按句拆分分别检索，避免整句噪声拉低相似度。以`what is diabetes? I'm really concern about it.`为例：前半句能命中定义类片段；后半句(表达情绪)相关性较低不会被强行拼接。
 
-![rag_retrieval](.\imgs\rag_retrieval.png)
+![rag_retrieval](./imgs/rag_retrieval.png)
 
 回答如下：
 
-![rag_response](.\imgs\rag_response.png)
+![rag_response](./imgs/rag_response.png)
 
 
 
