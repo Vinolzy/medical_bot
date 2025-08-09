@@ -1,0 +1,3 @@
+"""
+Medical Chatbot Django
+"""
