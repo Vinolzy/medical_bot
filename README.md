@@ -31,7 +31,7 @@
 
 # 2.前端：Chainlit
 
-[Chainlit](https://github.com/Chainlit/chainlit) 是一个专为LLM应用构建的开源前端框架，支持快速搭建聊天界面、文件上传、多模态输入等功能。本项目选用它是因为其易用性与对多模态交互的良好支持。
+[Chainlit](https://github.com/Chainlit/chainlit)是一个专为LLM应用构建的开源前端框架，支持快速搭建聊天界面、文件上传、多模态输入等功能。本项目选用它是因为其易用性与对多模态交互的良好支持。
 
 ## chainlit_app目录  
 
@@ -121,7 +121,7 @@ python run.py
 
 ## 5.1 SFT
 
-数据集整合成如下对话格式，便于与 tokenizer 的 chat template 对齐：
+数据集整合成如下对话格式，便于与tokenizer的chat template对齐：
 
 ```json
 {"messages": [{"role": "system", "content": "LLM的角色定位prompt"}, 
